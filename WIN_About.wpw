@@ -1,0 +1,220 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : WIN_About
+ major_version : 28
+ minor_version : 0
+ type : 2
+ description : ""
+ subtype : 0
+window :
+ name : WIN_About
+ identifier : 0x25f94bdd0ef28375
+ internal_properties : CAAAAAgAAADeTzZ6RvonEkKMF9uxO+7GB6frVFtOJHDwI6ijx9jBRTRTniwaQyJpm5O2Fr3f/ORy+WJk47ttfS+1eZ9hc/St0q9sGJ1IZfURXlPyGH2EqnbEfYhWwV6811fPKtWJC64j++CvmDZpzl0YWfxghHY91x2bAB3y7Sy2m0ZQP/BM57Gvb6/BlPiywTXSlyJMFPgqGr2NmUbu2Ol2DmFA90TTCpLRMPhlxaUltLt5i4Pa5QNUB1TUfOIp0pBNGbwrkXkX+DxKU98X99QKazqayX2Hm4QbR5oZ4LIdmyLx3g3o9obiz5aUvBEj70ZcZqFyx5adtcFWITpdQPmQQq3FpfZMf2Z8E6yywfPpGY2cBD6flVUvmT1plMXCwLzqwS78i+c0KFv/MFJNZVFkD/2aidKsrQI98dkkigu6ya8xOoovjwkb7pTa6bJIQZoy+g7qcMaGwrxQzhxmEyGkqOOClw6rrRRxjSTRovqEkYkHnA3MxEPAczyKZ+qsUKvHg+9zd271kCbeBo+k0kJLOIyHYph5QsondUsGdc0++9GJCZZSFcKQF2O9HEoprYp+cgTfbEjcMSZUCw1REDCdkfNY4zj+MNwNcg29SwXC/9mAnfY9Z/7TznfaV7+AnvawYBZGm9F0ULWzYzIwBtKBLWVgh48txZ4at3WObE5j9u+P+QU8kxTt5A6GRanwoWxab/O4KuMpFkETIlTh7eWY1Krxs+o6n+ZyNMyJfuWfOAfNLCsIT9y9q5oIUKhzhZKD1cEdPl8P2MY9WE5Mfoo9rIxNag==
+ properties :
+  width : 320
+  height : 480
+ controls :
+  -
+    name : STC_About
+    identifier : 0x25f94bdd0ef68375
+    internal_properties : CAAAAAgAAADuSiA2qqKy2rE2rLABcSF2oaDsBTs14qO8k+k6wezfOzxYtcj/b4wMuBTe0F1Y/MjYebby8s0M6ULHAo/ZK7cOBmINOfVjw14ya910fPXe5v8y4lGuK8SsLseRyZY9Fm4s+gxoB2sukIRmm9DpsoVJRPjkl7HPeFUg1qoIJoj1Bd9YW52gaNUNX2xsm/Ylql4nQTDCHJyEeqlwrOgU2wti0DYXEGpMQgVzzG/h+lYZuV2v+3oUqL5OObNUyksqfZ2germj9GpYRxBOFzn+TfbAmiYsuu2bB+sAEwEn9DvSvGLwmHAjZCNXGmHq+LP+pYbc+KKR7lIe87hjaaVaM568iKEcLOE5YevFEJQ1n9frSA2f3btCsvvJXItjAXkanYzMoRQUb6YiCJt5BgM4aa/yts0Cs2KX7Dm0mUCgkt5H7rsOc+zpQE73m3ydysYKgjSeq06LxSvYIN4jar6K7boONFYtL3I2p51fmD0Ep0ML5lh2wYSxxLrmNLuVp2cB5BbL+UET3BS1v18ZWKkRHUwNIgJOMAbiGzxJTJMpDrdSunrovKALNqhFJZ5y2TLBEEa/ruY/WDupJjsoHgagN6RWvcTj0Vt0Fm9Is4w55QQ+y51n7q+FXSeQnJ2ZT9A+ey2SQS2MhIGjXqqGHA6Mt1sy56gtFwlSzH6g0q+f5uC23eE6Wmrk4linkRnvUH8sRgB3R+02qZckAH33GEHMVX7uoa/Uyk74HUSoiQ6yUU6FqJCnZbs5N++jk2dBfM9YFkoxdKcjpYTweM0/5uf+CmUf/IdxU1BDN7tAcn78c2mCRW7p2CwTbxsx8GTaDjLBifolZbEmUAF04wVw+7r1wjADduzEZIrWvfD9HGuwDVMIDLK1qhyD6zYNSZXE3I8tmIcaQFtyhgfRsFXUku6PlWzwdE+C4f6Ijyp3ezEKCCG/lA/nbvmCW0FjosCRZVi7V+/je6QeFFLnWVjpOB8CA5/5OSSUHvpptY49ANFFg2aor85h6bImoFOlEyjWvK17LrRFjc0Ofmk7w34xstHtB376I1GSS+DGEkVJ/9BAVxgrvLxcpB/jY6k+K4jISUAGpTn5Dc8LsEZonPdwQosntHqp/AvxNKE1iS433d7P3lg7q61xK0KgUdmn1DS5uhic3Vziqux8CRDeQ4F50jRQYbYyvcxXjjActtzUHvM+okvGNK4pgkNHWyDxtAw+Dn8d7zm5ixXSqob8xha3dlYrH+DV+38=
+    properties :
+     x : 10
+     y : 60
+     width : 300
+     height : 397
+    type : 3
+    code_elements :
+     type_code : 2
+     p_codes : []
+  -
+    name : IMG_Title3
+    identifier : 0x25f94bdd0ef38375
+    internal_properties : CAAAAAgAAAD4tgW5VeaS8G5U3481WZRkWuHmjQxt8Gxml8PncDK4sZWqXOcq+rFow3TLA5xklizoNI3pDYEzUHj3akRor02s6oL0CIrfybU2arM1U5YmAn9+xd7bMAG5gwkaUdZBOwvRcpMz5xW+HzvsQCcFkCYniZJ8nArPCU/r651LsFpSjMTjpjCwMSCOwY9gUcszTYqOSZbhprvpNg0CH+DJaoGH4gcz9K6Bd+CIYvzGYnWyBFuH/lJfK028xE9LuBbjS+MCS7sv84oEhZZYA8Hq6qpxewcRyJan/rfHD4tnYTI0w1Ra73kwqD1p/QuWCyEvG0unnRgL9m6J0iUAMe37earCCC3rA3yx9V0Qh5JRpOCc8CA+Es++JoTKCl6Ehc0RFKSA9k8tjh6KHnB+PkeSlMcPb3tlnS3SFMprY6LGcgss70hFiFa7DPI2OEvVCVL/kJacZvxX6DgmBeWpoAIhcXk5oJYhR4RHNPV0+BG2vPQouYOlwlf5hNRmoZbuupGGcDfwC/UNl1FaQTDYi2+cWbaKTE/lHaWx0akvcF4nnPj/+F3UeYMHuxuwI31UmmLLxriKhI04XL0JGPUd7/0SAW/Du8LgCUWja9VLF7VYuyRPiHZ8IpvaA8X/RNP5hA7p7E5+e0uuVep/YBBZviGveisErG74sOS5Bld9Gtv9CFecAhZ0sS5q2sB4edcGzldBj4dr9f8Sp2J+DMhNbC+A4FMob9ragRlRcXus1OPBqBqYrewRkT9nHifKSpFy0Bufz7JUgZ7KxIfL6B5gTCDbzXfLcKAPxP2XFSuAi/LwQpi//FUCruQWQmRSUPk11AdsvoMbW0XapsVLQolpN4YvxhKXJfA2DncK+XBhXuAU8brnjZyNufw79EiIgQrVTWksILYzEpihVUZr4O16Apno2cMa3emXNfAAINUvbIgVwP9u3mbWMQXDLI/RamspcrvMR5eb/6VnWAm6qADediDjO2e78afgoBFoGY1VTPiZ8qrFp/x8mfTCedkRLChx9nSPi6f64ekX4NpY9SXntj7DdovsXzkuRM2/H4gfdxQrfH6p2INA0eG4R4sc/ft3
+    properties :
+     x : 52
+     y : 21
+     width : 107
+     height : 25
+    type : 8
+    code_elements :
+     type_code : 8
+     p_codes : []
+  -
+    name : IMG_WinDevMobile3
+    identifier : 0x25f94bdd0ef48375
+    internal_properties : CAAAAAgAAADfb9NacSq+gbbjutdQR+rJ2llMkdo0bfNVUUu3PEOFktORwZn7TxgX8IRezlLyLaxce9Q43vKjzI4J6vhDzkk4IdZFDPipQJQlesCLce5t0p3tB+nuLobAcSlbzwfqeoEv8ol1DJLrMLv/12OwXXKg+7pg+II/MuSA97qPdEkWgeku76jjQRpbs7xt1TzMuh577fPyYU7E37KAEFmmPYD+c9c7fVrRKtZuglbzSM2QLqOm/ywYQy1dGpHvkgFB4eOdwb3pXx0DfvuKjWJeGJxNpC/jlhBQoo/2VPkce9y3BxL3z3WoTh3xXfAaBzOh9Zizbs0UuXCbK9fJT2HL3ss9K+if5tDAgElmr5qWrs1GHiEddXKvNjdvRfUzdzTsUxOj5wZFBnJv9Rk82hwr7QkzB/G63Ls+WR50WkO5suFlXeYaKTEqoOcxMZuYug/ANzLLL8BV8EylFWawUX2vVBC8Sh0TbKAAl41vqbuRb5xo70nJe06r0wr/iZs9PssWyKFSLwXA9ZcpMc5w41TDQwbOfMik94UcgYTs7jAaarzR4j0dbUz0yLWS8UEu5PW/4H+tYNC701cUH+h5JfFy3cmEJJFdtLz4t+V5Sw51kmSNPkQuacTCA0RbpiGzVsvezyyelatau84JUgt18WDKhgJHmHH2zuRWO060IsuwE41K+i9CqlGXxKPY9/51T3VTU7ZwTMrfAvT773Ly5I3BkEHYIQbrNudx45OUXqg3OMJltfze+6lJO0MSBDHqrRydhqM/kJ0q2JOI24MjXQRcVtIjhUVjid2sV6hW42dSQJ4hgSX1Hv6obHH3G+a2XNYClYylfXfBo+Th7tRobjdvQhZ/lfA8
+    properties :
+     x : 248
+     y : 25
+     width : 56
+     height : 16
+    type : 8
+    code_elements :
+     type_code : 8
+     p_codes :
+      -
+        code : |1-
+         
+         BrowserRunApp("http://www.pcsoft.fr/windevmobile/index.html")
+        type : 18
+  -
+    name : STC_About1
+    identifier : 0x25f94bdd0ef78375
+    internal_properties : CAAAAAgAAAB3wJ2EQAozGgTdU1YR3T1KCrmDeIU9s+fy95LC9SHyHWQJ520UJsNibo6IUfvqIzpDuQeJb0As2Hm1fxYZNyOrYaeoGIeYxqleQ0bvAlfDTfYsf59leuPBYNFFCeQ8PivU1LpqbAclSi38Hc/J0U3gKreqexZ9fbsnZaOQ9lwmbIFCRkf8xwnUCamdhJFoupsUpl+tBNrsTh1BcVCpZ4uTU0rRxVugTp5vgnKCDbiPO13XHAsgPOC6vMlpgiH3oqGjCBukTTAdNu7kCjSmsl07gKSXRYlWOxqnnhkmreILIws8CVBRIiD1b2xiLzQHLfRvSSvWkQtqpjuwwqpD0lHyl+Y+M9fggVO6pZ/4e7BIO48Zn8caHqTocSmo8jJYBcFQk9Z0VjaMokENTMi9qibkNxKlm3qPFDbXCM9tlaw+mqFUQHS4IAVXh7aVzl4h76T1CfsDlKl+ZXtkv8lEPz/xVnl4pqZrod23iXauZBHqZJSRpMlcoTJu3GCBO+s+2W4P2gI0T0S27ZiJ9oCHueOTnLUd+P4HQnFLj0xWeRZO7vcjHhtiCJD8HP0jsV27+/YkUhFfqPM=
+    properties :
+     x : 10
+     y : 60
+     width : 300
+     height : 34
+    type : 3
+    code_elements :
+     type_code : 2
+     p_codes : []
+  -
+    name : BTN_NoName1
+    identifier : 0x25f94bdd0ef58375
+    internal_properties : CAAAAAgAAADICFc7sMTypEmJfvsQMi1B6SVBCfrxAhEzw2+joaOidz9xyM8ekyqkob68TjU0k1C1xr3Y33OxQeZJkH+nbC8k162Y3XXUu/uRAE6OTvzljyLpCLvj9n1CQPiNWThSmkVQIR1s2e/RUaRJQ0siDhGgv22zMV/sa7wUeDihQYZT9fagapby1uLJif5oKzIWtpjP3g3zISNTDKbcrYWwQhvuySbOCXfA24hyoMhnDTzXTAyXwV5a7Ej8Uhye49Mr1pdDQl2dSitANKhFEJZYwyXIK+bqsvl3B9i7pJFjbH2xf+CxOlSFe2YWZrqu8ICREvTDEY8SUCFxraWjVtrRe+IaCXODFFlXEI8wES/2AYsADp6zWhp57z4mss2ixK001NYxKKCX3WBpvqNRcgIAt9Lem7FHYQ2lL9FapAnu1wb/dHy7NIbr9clBLF1D0oShApAT/zFasu7vWgZ2QHyLoWhY5PzqLmYJ1HShGEvLkfrlK7tnTPlWvfFMvAycbeXIF3VTuXtwWel2wujVUK1vAV8qzKB9WXw/gvIEtZ6go/bIDBdl8MHu7NOJ5h5S8b29wrE96cD49K2mmNM1tsyYsDlbIFGxUygLyAYPrqq705BCVqAxzm+t6cZrDxXuZVAdTiwKnP+eJD0ySIloPhzOL5x8ikyL3UEuF0hjQfo6l+9pwiKXq7R71GdHw67CfOIfZVcVDvGqHprb3/Po0re//vigROFyo8CCG5M7m4h1U6aaJmiPOFSANMzjLP6kIOLpkjId3HzBfSoeerpQVgtznZcpRzga8h/s/8NQvR4IrKnPzuMD3Kki5rVWcZoSQ2h4DEaFwMAprI9232IM066xV4VcqfO9rTl5h6I8gpPjp1MrtQin7n9jwGlhl2IkC3qslg29eCT3dsh0SKZYZ6NFGzFB1nH2wh0S0ko3QxSP
+    properties :
+     x : 11
+     y : 17
+     width : 32
+     height : 32
+    type : 4
+    code_elements :
+     type_code : 4
+     p_codes :
+      -
+        code : |1-
+         
+         Close()
+        type : 18
+      -
+        type : 161
+        enabled : false
+ menu :
+  name : _Menu
+  identifier : 0x29f8144500a4e5ba
+  internal_properties : CAAAAAgAAADgMVTORwj2Mt8z/R5WRL0mTVIMDO11ij5YdBwcO3ZAw8tWdEBL95DgWGGgMGBRKql5dANp5Vg/qpNyJvJQ8sIrr6GzC+masJIwyV5P7DpW0go2kGsf4EvdW1eqlu6V7I5EHVrMjd02cTaXwP0dbd1DSbdsd/Wxk0ScMGI7Z0eDsGOMLRfieoTYskOjcLtA7tgFoR24z+3d3zH3Bloaoqj6XKllvOzqHQUKs5ikiJtsiZpXF9leDIYykRzjnC4k4qQVjthAFpugw+diG+HfnEMv+L/rU3DRjlIiDq+0aeUP
+  options : []
+ languages :
+  - en-GB
+ popup_menus : []
+ message_bar :
+  internal_properties : CAAAAAgAAADs05DCGZ1rLZdqupRTgfHEMKTb/vb44LogQG47lBtLMy9SF4MIGtcBF5Gkh5hcxuMLCcN6FxXi0pq1pSpdA6IhWDz3PVRtY/mVCSFR2kVN0lZ/x/o0N7qftKWt
+ actionbar : {}
+ code_elements :
+  type_code : 1
+  p_codes :
+   -
+     code : |1+
+      PROCEDURE WIN_About()
+   -
+     code : |1-
+      
+      MobileWinAdaptSize(STC_About..Name)
+     type : 34
+   -
+     code : |1-
+      
+     type : 165
+   -
+     code : |1+
+      
+      
+     type : 177
+   -
+     type : 180
+     enabled : false
+   -
+     type : 230
+     enabled : false
+   -
+     code : |1+
+      
+      
+     type : 2
+   -
+     code : |1+
+      
+      
+     type : 11
+   -
+     code : |1+
+      
+      
+     type : 12
+   -
+     code : |1+
+      
+      
+     type : 17
+   -
+     code : |1-
+      
+     type : 13
+  procedures :
+   -
+     name : MobileWinAdaptSize
+     internal_properties : CAAAAAgAAADki4kI8baDEh/xqTDkjf1G4btLueO1gZOwNgsl8f5weth4kIrKNHQvfC2iPYalC9XztCyESvBvJkKe9L6ybMZSfTTJiaLUOupTkPq1PaLjSbyu8bTDezYxjHuBtj1fEVjgq6Es8jb+jdJfkPgHcHd2FaeOansxAIOpuCrdxhlP+kfFrHX9L2avulHOA2aZ2N+dmq66Wvfjt2v8vTbFncsi3lZpHg==
+     procedure_id : 1583380156581380981
+     type_code : 14
+     code : |1+
+      // Summary: Adapts the window size to the content of the text control
+      // Syntax:
+      //WinMobileAdaptSize (<sControlName> is string)
+      //
+      // Parameters:
+      //	sControlName (UNICODE string): Name of the control containing the long text
+      // Return value:
+      // 	None
+      //
+      PROCEDURE MobileWinAdaptSize(sControlName is string)
+      
+      nBottomMargin is int = CoordinateEditorToScreen(10)
+      nSecurityMargin is int = CoordinateEditorToScreen(20)
+      
+      IF IniOSMode() THEN
+      	nSecurityMargin = CoordinateEditorToScreen(40)
+      END
+      
+      // Check the control existence
+      IF ControlExist(sControlName)=False THEN
+      	RETURN
+      END
+      
+      // Resize the control
+      nTextHeight is int= TextHeight(sControlName,{sControlName,indControl}..Caption,tMultiline) + nSecurityMargin
+      IF {sControlName,indControl}..X + nTextHeight + nBottomMargin < MyWindow..InitialHeight THEN
+      	nTextHeight = MyWindow..InitialHeight - nBottomMargin - {sControlName,indControl}..X
+      END
+      
+      {sControlName,indControl}..Height = nTextHeight
+      
+      // Resize the window
+      nWindowHeight is int
+      IF {sControlName,indControl}..X + nTextHeight + nBottomMargin > MyWindow..InitialHeight THEN
+      	//nWindowHeight = {sControlName,indControl}..X + nTextHeight + nBottomMargin
+      	nWindowHeight = MyWindow..InitialHeight + (nTextHeight - {sControlName,indControl}..InitialHeight)
+      ELSE
+      	nWindowHeight = MyWindow..InitialHeight
+      END
+      
+      
+      MyWindow..UsefulHeight = nWindowHeight
+      
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAAB6ragasMBWLfpsSyU19J6lAvYEqFWd1xYOjmHr1XHVZOVmechqLo1vKvfoAJhHeXL59P8BudVQfrBZ/U9vpjDz5RFibMKKm/84EA==
+  original_name : _11
+resources :
+ string_res :
+  identifier : 0x1006a26036fa751f
+  internal_properties : CAAAAAgAAACyXVFaObH4lOGSEHJoZf1MD49w+XTw2LScZCP/urkWFwy+HYJdyQ3umA==
+custom_note :
+ internal_properties : CAAAAAgAAAC68/W0/adbG0nFCRhrE42B5HRnbDzVHaz86sSQyxlBk7I=
+rad :
+ internal_properties : CAAAAAgAAABoAN7PLpwJW3EiA7WVZdCA5EwrCA1rvutcDHooMWKe

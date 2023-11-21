@@ -1,0 +1,616 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : SET_OpenFoodFacts
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x15f94bdf017c8920
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  internal_properties : CAAAAAgAAAD2dl9YGcqaj7WeOXz0sQ7lc86Kpd7+xEtSG3wPq/rhwIF85autVfcT1joG16DE+QaC0t1GKy6sWVf5Pprut/mCbEawxRB63Q==
+  type_code : 31
+  p_codes :
+   -
+     internal_properties : CAAAAAgAAABFV5YgwTHYDyTh48NfIIYoT5gdKYXxo/5z9ZUuK9xW4jIDuWMZ7+wjhaSRWUOVB3tSxff5zs7wclTaSYfhcUzNB2PBnWnat7+lVywEQxbhNUypBEegZKM4sUmauGWFUOXwWbZbKyJg5E9MpJyhriNEB2Gmo+J2VEZmT2DiZERQF7TK20LR/0Vp7DYSCKYWaxhW2ouYB8Mh5NiHiQfeG0Tsk1+P5W4KiVkYyz1srH5VMTFYlmagqBWUbyyQY3oh+d+VPgZiymrntjEva/n8Nybf2GHKPdmaFZqf3rZkAep7uC8Zx5+2WifjfEXungGHRnCXEQ3J4HRin/4hfhkkN+fQJGAm3Hph
+     code : |1+
+      CONSTANT
+      	URL_OFF = "http://fr.openfoodfacts.org"
+      	FILE_INGREDIENTS = "detection.txt"
+      	
+      	PARAM_USERNAME = "USERNAME"
+      	PARAM_PWD = "PWD"
+      	
+      	WINNAME_About = 1
+      	WINNAME_Settings =  2
+      	WINNAME_EditProp = 4
+      	
+      	MAX_PHOTO_SIZE = 1000
+      END
+      
+      // Configuration for accessing the production server
+      gsURLOFF is string = URL_OFF
+      gsLoginServerOFF is string = ""
+      gsPasswordServerOFF is string = ""
+      
+      // User account on OpenFoodFacts (used in addition only)
+      gsUserName is string = LoadParameter(PARAM_USERNAME,"")
+      gsPassword is string = LoadParameter(PARAM_PWD,"")
+      
+      // Array of sought allergens
+      garrAllergens is array of strings
+      
+      gnOpenedChild is int
+      
+      // Structures returned by the webservice
+      STINGREDIENTS is Structure
+      	sText is string
+      	id is string
+      	nRank is int
+      	nPercent is int
+      END
+      
+      STPRODUCT is Structure
+      	//	labels_hierarchy is array of strings
+      	//	_id is string
+      	//	categories_hierarchy is array of strings
+      	//	checkers_tags is array of strings
+      	//	labels_tags is array of strings
+      	//	image_small_url is string
+      	//	code is string
+      	//	traces_tags is array of strings
+      	//	lang is string
+      	//	ingredients_that_may_be_from_palm_oil_tags is array of strings
+      	generic_name is string
+      	//	rev is int
+      	//	_keywords is array of strings
+      	//	editors is array of strings
+      	//	interface_version_created is string
+      	//	emb_codes is string
+      	//	max_imgid is string
+      	//	additives_tags is array of strings
+      	//	emb_codes_orig is string
+      	//	nutrient_levels_tags is array of strings
+      	//	informers_tags is array of strings
+      	//	photographers_tags is array of strings
+      	//	additives_n is int
+      	//	unknown_nutrients_tags is array of strings
+      	//	packaging_tags is array of strings
+      	//	countries_tags is array of strings
+      	//	ingredients_from_palm_oil_tags is array of strings
+      	//	brands_tags is array of strings
+      	//	emb_codes_tags is array of strings
+      	//	purchase_places is string
+      	//	traces is string
+      	//	countries_hierarchy is array of strings
+      	//	categories is string
+      	ingredients_text is string
+      	product_name is string
+      	//	created_t is int
+      	//	creator is string
+      	//	ingredients_from_or_that_may_be_from_palm_oil_n is int
+      	//	serving_size is string
+      	//	last_modified_by is string
+      	//	completed_t is int
+      	//	origins is string
+      	//	stores is string
+      	//	nutrition_grade_fr is string
+      	//	stores_tags is array of strings
+      	//	id is string
+      	//	countries is string
+      	//	purchase_places_tags is array of strings
+      	//	interface_version_modified is string
+      	//	sortkey is int
+      	//	last_modified_t is int
+      	//	correctors_tags is array of strings
+      	//	brands is string
+      	//	ingredients_tags is array of strings
+      	//	status is string
+      	//	packaging is string
+      	//	serving_quantity is string
+      	//	origins_tags is array of strings
+      	//	nutrition_data_per is string
+      	//	labels is string
+      	//	link is string
+      	//	cities_tags is string
+      	//	categories_tags is array of strings
+      	//	quantity is string
+      	//	expiration_date is string
+      	//	status_tags is array of strings
+      	//	ingredients_that_may_be_from_palm_oil_n is int
+      	//	ingredients_from_palm_oil_n is int
+      	image_url is string
+      	//	ingredients is array of STINGREDIENTS
+      	//	lc is string
+      END
+      
+      STANSWER is Structure
+      	status_verbose is string
+      	status is int
+      	product is STPRODUCT
+      	code is string
+      END
+      
+      
+      gsIngredientList is string
+      IF fFileExist(FILE_INGREDIENTS) THEN
+      	gsIngredientList = fLoadText(FILE_INGREDIENTS)
+      END
+      IF gsIngredientList<>"" THEN
+      	StringToArray(gsIngredientList,garrAllergens,CR)
+      END
+      
+      gsPropName is string
+      gsNewValue is string
+      
+     type : 720896
+  procedures :
+   -
+     name : CallWS_FindProduct
+     internal_properties : CAAAAAgAAACtZt+tTxLTvC6wbR3YyZxvLwlAWLzoJBOOW5O7/dGItUy1/Npts+2xox69cEltozwXXn8XDuaba03dXNbV/LTmEH/IG2K7ZsVurG/CCKQuF9+dI6LouOSCaegVMhf6Zg8f9gdF+p1vAD65ZDsi+jOY05FfYih7nnCTgEKuewB7i6pCphY6tUIELG0i8I/20ZMiEA/S5wWxR4g0OvRd5H27kOiWGtZG0ToOEqN4DsdWru39xHnSyQ==
+     procedure_id : 1583380165172234528
+     type_code : 15
+     code : |1+
+      // Summary: Call the Open Food Facts webservice to find a product
+      // Syntax:
+      // CallWS_FindProduct (<sID> is string)
+      //
+      // Parameters:
+      //	sID (UNICODE string): bar code of product
+      // Return value:
+      // 	None
+      //
+      //
+      PROCEDURE CallWS_FindProduct(sID is string)
+      
+      sUrl is string = gsURLOFF+"/api/v0/product/%1.json"
+      
+      sUrl = StringBuild(sUrl,NoSpace(sID))
+      stTempAnswer is STANSWER
+      bufImage is buffer
+      arrIngredrients is array of string
+      sTMPRes is string
+      nPos1 is int
+      nPos2 is int
+      nPos3 is int
+      
+      
+      // Query to the WebService
+      IF NOT HTTPRequest(sUrl,"","","","",gsLoginServerOFF,gsPasswordServerOFF) THEN
+      	ExecuteMainThread(CallbackWS,True,"Unable to contact the database." + CR + "Check your connection to Internet.")
+      ELSE
+      	// Retrieve the result
+      	buf is buffer = HTTPGetResult()
+      	
+      	IF buf ~= "" THEN
+      		ExecuteMainThread(CallbackWS,True,"Unable to contact the database." + CR + "Check your connection to Internet.")
+      	ELSE
+      		// Deserialization
+      		Deserialize(stTempAnswer,buf,psdJSON)
+      		
+      		// Unknown product: proposes to add it
+      		IF stTempAnswer.status = 0 THEN
+      			ExecuteMainThread(CallbackUnknownProduct,sID)
+      		ELSE
+      			IF stTempAnswer.product.image_url <> "" _AND_ HTTPRequest(stTempAnswer.product.image_url) THEN
+      				bufImage = HTTPGetResult()
+      			END
+      			// Study the ingredients
+      			sTMPRes = stTempAnswer.product.ingredients_text
+      			WHILE sTMPRes <> ""
+      				nPos1 = Position(sTMPRes,",")
+      				nPos2 = Position(sTMPRes,"(")
+      				
+      				IF nPos1 > nPos2 _AND_ nPos2 > 0 THEN
+      					nPos3 = Position(sTMPRes,")")
+      					nPos1 = Position(sTMPRes,",",nPos3)
+      				END
+      				
+      				IF nPos1 = 0 THEN
+      					ArrayAdd(arrIngredrients,NoSpace(sTMPRes))
+      					sTMPRes = ""
+      				ELSE
+      					ArrayAdd(arrIngredrients,NoSpace(sTMPRes[[1 TO (nPos1-1)]]))
+      					sTMPRes = sTMPRes[[(nPos1+1) TO]]				
+      				END
+      				
+      				
+      			END	
+      			// Display the ingredients	
+      			ExecuteMainThread(CallbackWS,False,"",stTempAnswer.product.product_name,bufImage,arrIngredrients)
+      		END
+      		
+      		
+      	END
+      END
+     type : 458752
+   -
+     name : CallWSAddProduct
+     internal_properties : CAAAAAgAAABO4SPlc5Y3QfxiTl5kc+5MKkbGZoo7JeDh7aRmNzuqzznbLGIjlne7P84yoNEoiCwTgRrcVy0NgR5a9uQvEfWUNb8w3ITNaacDYf/uT62TW4YLOxtyJHiuVcnqnrt6MVIc8m8nqI/nixxqHVHmt6+31my3mu0z/DTvSbgmq5Xarmr7HCRV81VtR1gjpbAXV4moUrE132bmbjLyIh84IR/orukqsuL0MSWza7Kp3V664QXTvNUwJ4ygeznEEdcnPU3PxPXKqPaKvwFRiOn7F/q9AFUM8RSdNaADBpuV4Aqg89E/x1brROU8GVDuUcOIKTQhwYlM5OICLdUlKLPp2dIN3/4vBJefWe0YqZR6fpNspCVWVyWtit3HkbOIaygCdsl9wudzpGixYm6cOLFBXihFKXGUavoZIZiEcKH8ArK1AySCm+f1W0U+rfikG4Xs6mU2dKnan1KBiHk+irxbpJVoODXR0M8oDTCNIm4136ViZvWhn7W7BKe8Vai2pyDCpGK7Vf1DFvzUHVZHzw==
+     procedure_id : 1583380165172300064
+     type_code : 15
+     code : |1+
+      // Summary: Calls the OpenFoodFact Webservice to add a product
+      // Syntax:
+      // CallWSAddProduct ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      PROCEDURE CallWSAddProduct()
+      
+      sCode is string
+      sPropList is string
+      bufIMG is buffer
+      
+      // Build the parameters of the query
+      FOR ALL ROW of WIN_Scan.TABLE_Properties
+      	sPropName is string = WIN_Scan.SET_PropName
+      	IF sPropName[[1]]="+" THEN sPropName=sPropName[[2 TO]]
+      	IF sPropName="code" THEN sCode=WIN_Scan.COL_Value
+      	
+      	sEncodedValue is string ANSI = WIN_Scan.COL_Value
+      	sEncodedValue = StringToUTF8(sEncodedValue)
+      	sEncodedValue = URLEncode(sEncodedValue)
+      	sPropList += ["&"]+sPropName+"=" + sEncodedValue
+      END
+      
+      sUrl is string = gsURLOFF + "/cgi/product_jqm2.pl?"+sPropList
+      
+      // Query to the WebService
+      IF NOT HTTPRequest(sUrl,"","","","",SET_OpenFoodFacts.gsLoginServerOFF,SET_OpenFoodFacts.gsPasswordServerOFF) THEN
+      	ExecuteMainThread(CallbackWSAddition,True,"Unable to contact the database." + CR + "Check your connection to Internet.")
+      ELSE
+      	// Retrieve the result
+      	buf is buffer = HTTPGetResult()
+      	IF buf ~= "" THEN
+      		ExecuteMainThread(CallbackWSAddition,True,"Unable to contact the database." + CR + "Check your connection to Internet.")
+      	ELSE
+      		
+      		IF WIN_Scan.gsPhotoAdd <> "" THEN
+      			// Success: send the image
+      			sUrl = gsURLOFF + "/cgi/product_image_upload.pl"
+      			
+      			sContentType is string = "multipart/form-data; boundary=---------------------------19482971420129"
+      			
+      			// Process the photo
+      
+      <SI CibleExécution=Android>
+      	
+      	// Android does not automatically turn round the photos
+      	// They must be turned manually according to the EXIF data
+      	
+      	// Process the exif data and the resizing
+      	ProcessJavaPhoto(WIN_Scan.gsPhotoAdd,MAX_PHOTO_SIZE)
+      	
+      	// Load the buffer
+      	bufIMG = fLoadBuffer(WIN_Scan.gsPhotoAdd)
+      	
+      <SINON SI CibleExécution=iOS>
+      				
+      				// iOS automatically turns round the photo
+      				// It can be used directly
+      				iImage is an Image = dLoadImage(WIN_Scan.gsPhotoAdd)
+      				
+      				// Resize		
+      				IF NOT iImage.Valid THEN
+      				ExecuteMainThread(CallbackWSAddition,True,"Invalid image")
+      				END
+      				
+      				nWidth is int = iImage..Width
+      				nHeight  is int = iImage..Height
+      				nWidthNew, nHeightNew are int
+      				
+      				IF nWidth > MAX_PHOTO_SIZE _OR_ nHeight > MAX_PHOTO_SIZE THEN
+      					IF nWidth > nHeight THEN
+      						nWidthNew = MAX_PHOTO_SIZE
+      						nHeightNew = nHeight * nWidthNew / nWidth
+      					ELSE
+      						nHeightNew = MAX_PHOTO_SIZE
+      						nWidthNew = nWidth * nHeightNew / nHeight
+      					END
+      					
+      					dResize(iImage,nWidthNew,nHeightNew,drStretched)
+      	END
+      	
+      	// Load the buffer
+      	bufIMG = iImage.Image
+      	
+      <FIN>
+      
+      			
+      			IF bufIMG ~= "" THEN RETURN
+      			
+      			bufPostContent is buffer = UnicodeToAnsi(StringBuild([
+      				-----------------------------19482971420129
+      				Content-Disposition: form-data; name="jqueryfileupload"
+      				
+      				1
+      				-----------------------------19482971420129
+      				Content-Disposition: form-data; name="imagefield"
+      				
+      				front
+      				-----------------------------19482971420129
+      				Content-Disposition: form-data; name="code"
+      				
+      				%1
+      				-----------------------------19482971420129
+      				Content-Disposition: form-data; name="imgupload_front"; filename="%1.jpg"
+      				Content-Type: image/jpeg
+      			]+CR+CR,sCode))+bufIMG+UnicodeToAnsi(CR+"-----------------------------19482971420129--"+CR)
+      			
+      			IF NOT HTTPRequest(sUrl,"","",bufPostContent,sContentType,SET_OpenFoodFacts.gsLoginServerOFF,SET_OpenFoodFacts.gsPasswordServerOFF) THEN
+      				ExecuteMainThread(CallbackWSAddition,True,"Unable to contact the database." + CR + "Check your connection to Internet.")
+      			END
+      			
+      			buf = HTTPGetResult()
+      		END
+      		
+      		// Display the result of the call
+      		ExecuteMainThread(CallbackWSAddition,False,"")
+      	END
+      END
+      
+     type : 458752
+   -
+     name : CallbackWS
+     internal_properties : CAAAAAgAAADbLQy/Ao+eJnq+0hXZazN7eU+DiRUknIyTUOg5M9/1c5vY4TKGwrq2fINJIiu+aLo3amdOzIArBfzS5uP4Wzkcv7HP93jfVsfASiSfUx8nhw3zyZ5w+Y0vqO0faUgQequ2zr8x+xF0ifOVR5pjAFOG1AeVsDmPj+7Tl4UzXiW16BhsqGWdVO2r7YK0DnQTBZhQ0rUimJSnHa5UDT8ONDgKTAFhv7xHi8bPjO7RTcFVSrZC
+     procedure_id : 1583380165172365600
+     type_code : 15
+     code : |1+
+      // Summary: Result of the call to the webservice (search for product)
+      // Syntax:
+      //CallbackWS (<bError> is boolean, <sError> is string [, <sTitle> is string [, <bufPhoto> is buffer [, <arrIngredient> is array]]])
+      //
+      // Parameters:
+      //	bError (boolean): True if an error occurred
+      //	sError (UNICODE string): Text of the error
+      //	sTitle (UNICODE string - default value=""): Name of product
+      //	bufPhoto (buffer - default value=""): Buffer containing the photo
+      //	arrIngredient (array - default value=0): Array of ingredients
+      // Return value:
+      // 	None
+      //
+      PROCEDURE CallbackWS(bError is boolean, sError is string,sTitle is string = "", bufPhoto is buffer="", arrIngredient is array of string = Null)
+      
+      sAllergens is string
+      
+      IF bError THEN
+      	WIN_Scan..Plane = 1
+      	Error(sError)
+      ELSE
+      	// Process the photo
+      	WIN_Scan.IMG_Photo = bufPhoto
+      	
+      	// Name of the product
+      	WIN_Scan.STC_ProductName = sTitle
+      	
+      	// Display the ingredients
+      	TableDeleteAll(WIN_Scan.TABLE_Ingredients)
+      	FOR EACH sIngredient of arrIngredient
+      		TableAddLine(WIN_Scan.TABLE_Ingredients,sIngredient)
+      		
+      		// Find the allergen
+      		FOR EACH sAllergen of SET_OpenFoodFacts.garrAllergens 
+      			IF Contains(sIngredient,sAllergen,IgnoreCase) _AND_ NOT Contains(sAllergens,sAllergen,IgnoreCase) THEN
+      				sAllergens += sAllergen + CR
+      			END
+      		END
+      	END
+      	
+      	// Display the form if necessary
+      	WIN_Scan..Plane = 2
+      	
+      	IF sAllergens <> "" THEN
+      		// The product contains allergens
+      		Info("This product contains allergens:" + CR + CR + sAllergens)
+      	END
+      	
+      END
+      
+     type : 458752
+   -
+     name : CallbackAddProduct
+     internal_properties : CAAAAAgAAAANzmdCsQp0dgV02NSmbD64Skchx74hPyREj97GiZQB88lpJ7zrN5BQPnDqM41FUJo0IMiSrLOgc3kttTLKYQRu6Zl+G8yeOJ6gaMyqbvjGuS/qfULl/Ljg0YQ46RVUxLSrPBSw1D1PdlvINL4FoODpeWz23xX5qU/wbIfSB4620IDwJ+PfwhuQ28B3FW+9VCIUbRFdoQdIyql5G9U40xir2dW4kc3BCel8FkGOrMhL/4fmEIFS9oxCb9xWgX7p35vGlk84e4jsvLjhYgKomlRBBLFVx+kKA1rCDUtEfT7ylMfck4LjsweBtJJq6RqZawubktECpHinKDCQKbLW
+     procedure_id : 1583380165172431136
+     type_code : 15
+     code : |1+
+      // Summary: Result of the call to the webservice wiht an unknown product, the application is used to add it
+      // Syntax:
+      //CallbackAddProduct (<sBarCode> is string)
+      //
+      // Parameters:
+      //	sBarCode (UNICODE string): bar code of product
+      // Return value:
+      // 	None
+      //
+      PROCEDURE CallbackAddProduct( sBarCode is string )
+      
+      // Switches to the plane for adding a product
+      WIN_Scan.STC_Click_here_to_take..Visible = True
+      WIN_Scan..Plane = 4
+      
+      WIN_Scan.STC_ADDITION = StringBuild("Adding the %1 product",sBarCode)
+      
+      // Initialize the table for entering properties
+      TableDeleteAll(WIN_Scan.TABLE_Properties)
+      TableAddLine(WIN_Scan.TABLE_Properties,"code","Bar code",sBarCode,"Bar code of product.")
+      TableAddLine(WIN_Scan.TABLE_Properties,"product_name","Name of the product","","Name of product (Example: Kinler Buono White)")
+      TableAddLine(WIN_Scan.TABLE_Properties,"generic_name","Generic name","","Generic denomination (Example: Chocolate bar WITH milk AND nuts)")
+      TableAddLine(WIN_Scan.TABLE_Properties,"quantity","Quantity","","Examples: 2 l, 250 g, 1 kg, 25 cl")
+      TableAddLine(WIN_Scan.TABLE_Properties,"packaging","Conditioning","","Type of packaging, format, matter... (Examples: Fresh, Can, Vacuum-packed, Frozen, Bottle, Tin, Box, Glass, Plastic, Cardboard...)")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+brands","Checkmarks","","Examples: Kinler Buono White, Kinler Buono, Kinler, Farirro")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+categories","Categories","","All you have to do is specify the more specific category, the parent categories will be automatically added. Examples: Sardines, Light mayonnaise, Orange juice")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+labels","Labels, certifications, awards","","Labels, certifications, awards. Specify the most specific labels. The parent categories such as 'Bio' or 'Fair trade' will be automatically added. Examples: AB, European bio, Max Havelaar, Red Label, IGP, AOP, Flavor of year 2012...")
+      TableAddLine(WIN_Scan.TABLE_Properties,"origins","Origin of ingredients","","Examples: Valley of Baux-de-Provence, Provence, France")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+manufacturing_places","Production location","","Production or transformation locations. Examples: Provence, France")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+emb_codes","Packer code","","Packer code (EMB) or bottler code. In France, code starting with EMB followed by 5 digits (INSEE code of commune) and possibly a letter that identifies the company that conditioned the product. In other European countries, code preceded by 'e'. Or in an oval, 2 initials of the country following by a number and CE. For the wine and alcohol, code on the cap above the cork. Examples: EMB 53062, FR 62.448.034 CE, 84 R 20, 33 WINEGROWER 522 ")
+      TableAddLine(WIN_Scan.TABLE_Properties,"link","Link_","","Link to the page of product on the official site of manufacturer.")
+      TableAddLine(WIN_Scan.TABLE_Properties,"expiration_date","UseBy/BestBefore","","The limit date is used to find out the changes of products in time and to identify the most recent version.")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+purchase_places","Purchase locations","","Specify the location where the product was purchased or seen (at least the country).")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+stores","Stores","","Name of the store where the product was purchased or seen.")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+countries","Sales countries","","Countries where the product is widely distributed (excluding the stores specialized in import).")
+      TableAddLine(WIN_Scan.TABLE_Properties,"+ingredients_text","Ingredients","","Keep the order, indicate the % when it is specified, separated by a comma or - , Use ( ) for the ingredients of a product, indicate the allergens between _: cornflour_. Example: Cereals 85,5% (cornflour_ 11%), malt extract (barley), cacao 4,8%, vitamin C")
+      
+      WIN_Scan.IMG_Product = ""
+     type : 458752
+   -
+     name : CallbackUpdateProp
+     internal_properties : CAAAAAgAAADA4iRlJPfTT93c1EbZPFe7NiwpiiiLv8uDoJ79kZ2I1Doto0b4F7dxmR1f9rcOHMbTvKLZPd7RxUTAs9RjUOiiEdE38V6TeJdfLh9Tv1IuwDBgz/F6ycsbBqcIaZpFJqBvc4sf5d7Xv2xD5GxpZ8uLdRYbqBdgbsRq04hZemxVEbwzzBKUO63X1jdHUq9xZOv4YZBN5Q==
+     procedure_id : 1583380165172496672
+     type_code : 15
+     code : |1-
+      // Summary: Callback on the modification of a property
+      // Syntax:
+      //CallbackUpdateProp (<sPropName>, <sPropVal>)
+      //
+      // Parameters:
+      //	sPropName: name of the property
+      //	sPropVal: new value
+      // Return value:
+      // 	None
+      //
+      PROCEDURE CallbackUpdateProp( sPropName , sPropVal )
+      
+      n is int = TableSeek(WIN_Scan.SET_PropName,sPropName)
+      IF n>0 THEN
+      	WIN_Scan.COL_Value[n] = sPropVal
+      	TableDisplay(WIN_Scan.TABLE_Properties,taCurrentSelection)
+      END
+     type : 458752
+   -
+     name : CallbackWSAddition
+     internal_properties : CAAAAAgAAABwHzU2zkMhbHDIae9WxoE64UCKN4gy1+3agNE/U5h+ELrWXsxELmKh1teY/5AfCeuFMgKuPKJtYDzdfGggcvTY8x7bOdYYWrqFMjL/85i5/7YkVh1yFMO0g35uryh8kMnN8FLxPWMvvL0edNjjjGd2lbfSsgfdoGMJBAZluh1H4qftSNWZ+z6HQqWSo+LVbUfr5Vam1hu6hvUqFPxbS3oUcuL9ig==
+     procedure_id : 1583380165172562208
+     type_code : 15
+     code : |1+
+      // Summary: Callback after the adidtion of a product
+      // Syntax:
+      //CallbackWSAddition (<bError> is boolean, <sError> is string)
+      //
+      // Parameters:
+      //	bError (boolean): True if an error occurred
+      //	sError (UNICODE string): Text of the error
+      // Return value:
+      // 	None
+      //
+      PROCEDURE CallbackWSAddition(bError is boolean, sError is string)
+      
+      WIN_Scan..Plane = 1
+      IF bError THEN
+      	Error(sError)
+      ELSE
+      	ToastDisplay("Product added into the Open Food Facts database")
+      END
+      
+     type : 458752
+   -
+     name : CallbackUnknownProduct
+     internal_properties : CAAAAAgAAABeb5Jd/DRB4LpK7WXY0IcQ40aMk/CSH5l4jq1ppRYsjjxc4OhMNsptbP18gTbh50GHwESyVEqd1JbH5JbybO5KjbQBudJEwnIrQKLl9YrDqcQ2nUj/N/ptKP8NKkFTJXyc550QPnIySe5jq7uEKyCNMOpNGQjco1ymZVns57gs1b6M11gGptUcp359UveoEjpiZN0ha44pd/ovF8NgrjZQP/rTpA==
+     procedure_id : 1583380165172627744
+     type_code : 15
+     code : |1+
+      // Summary: Callback in case of unknown product
+      // Syntax:
+      //CallbackUnknownProduct (<sID>)
+      //
+      // Parameters:
+      //	sID: Bar code of the product
+      // Return value:
+      // 	None
+      //
+      PROCEDURE CallbackUnknownProduct(sID)
+      
+      IF YesNo("Unknown product","Do you want to add it to the Open Food Facts database?")=Yes THEN
+      	WIN_Scan.gsBarCode = sID
+      	IF SET_OpenFoodFacts.gsUserName="" THEN
+      		WIN_Scan..Plane = 5
+      	ELSE
+      		CallbackAddProduct(WIN_Scan.gsBarCode)
+      	END
+      ELSE
+      	CallbackWS(True,"Unknown product.")
+      END
+     type : 458752
+   -
+     name : CallWSLogin
+     internal_properties : CAAAAAgAAAD4cE0BSE+IRe5tUNRZeEvNGgyElh3yi0qOQ0755uKvRzuCPaB4HjgKKpfG4OgJzl2ecaOuCxX5hneK/E6yapDeX+OcabKdW+Mc+7tr7Rth3QR3fL+PkmcElvsGJAfAchMBMM8lDvF9jpibNjHwKmEKpfO/kuSDeMo//M7GS3q/D56uqEEAaL81JPKnG/+NETz91E6k4yzXeTYdkzmyHUEIKgKqJv6b
+     procedure_id : 1583380165172693280
+     type_code : 15
+     code : |1+
+      // Summary: Call the webservice to identify toward Open Food Facts
+      // Syntax:
+      // CallWSLogin ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      PROCEDURE CallWSLogin()
+      
+      // Build the authentication URL
+      sURL is string = StringBuild(SET_OpenFoodFacts.gsURLOFF+"/cgi/session.pl?user_id=%1&password=%2&remember_me=off&.submit=Sign-in",URLEncode(WIN_Scan.EDT_User),URLEncode(WIN_Scan.EDT_Password))
+      IF HTTPRequest(sURL,"","","","",SET_OpenFoodFacts.gsLoginServerOFF,SET_OpenFoodFacts.gsPasswordServerOFF)=False THEN
+      	// Displays an error if the call fails
+      	ExecuteMainThread(CallbackWSIdentification,True,"Unable to contact the OpenFoodFacts site." + CR + "Check your connection to Internet.")
+      ELSE
+      	// Analyzes the response
+      	c is CCookie
+      	c.AnalyzeCookie(HTTPGetResult(httpHeader))
+      	
+      	sCookie is string = c.ReadCookie("session")
+      	IF sCookie~="" THEN
+      		ExecuteMainThread(CallbackWSIdentification,True,"Wrong user name or password.")
+      	ELSE
+      		ExecuteMainThread(CallbackWSIdentification,False,"")
+      	END
+      END
+      
+     type : 458752
+   -
+     name : CallbackWSIdentification
+     internal_properties : CAAAAAgAAACYqlyWL6/v7xnsEIIF+Bv/emRpnqRbc3MXyNq5PQEEoI5Fu5KspyuhPX2jGvsyYGpXxJJlmQ4FnUCg54An7Gw2ldn/1dIrNN8LjvHhCRzkVqZefV/0U1GdhIVK1xT/9N49yUHVF6AlEfJpzuLjAbFhW/x5ZnHi7E6gqfK/nI7rN2LhUpgetaPR1LXJqCHDShHFiUgFPQ==
+     procedure_id : 1583380165172758816
+     type_code : 15
+     code : |1+
+      // Summary: Process the result of the call to the identification toward Open Food Facts
+      // Syntax:
+      //CallbackWSIdentification (<bError> is boolean, <sError> is string)
+      //
+      // Parameters:
+      //	bError (boolean): True if an error occurred
+      //	sError (UNICODE string): Text of the error
+      // Return value:
+      // 	None
+      //
+      PROCEDURE CallbackWSIdentification(bError is boolean, sError is string)
+      
+      IF bError THEN
+      	WIN_Scan..Plane = 5
+      	Error(sError)
+      ELSE
+      	SET_OpenFoodFacts.gsUserName = WIN_Scan.EDT_User
+      	SET_OpenFoodFacts.gsPassword = WIN_Scan.EDT_Password
+      	SaveParameter(PARAM_USERNAME,SET_OpenFoodFacts.gsUserName)
+      	SaveParameter(PARAM_PWD,SET_OpenFoodFacts.gsPassword)
+      	CallbackAddProduct(WIN_Scan.gsBarCode)
+      END
+      
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : COL_SansNom1
+resources :
+ string_res :
+  identifier : 0x1006a26036de74d1
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

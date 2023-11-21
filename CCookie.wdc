@@ -1,0 +1,97 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : CCookie
+ major_version : 28
+ minor_version : 0
+ type : 4
+ description : ""
+ subtype : 0
+class :
+ identifier : 0x14c8f8c700d6474d
+ internal_properties : CAAAAAgAAAB2/vstTMCJbS/hlxjFxirSqKvCUuv8YxgpWyl7S3iA
+ code_elements :
+  type_code : 10
+  p_codes :
+   -
+     code : |1+
+      // Class for emulating the CookieManage/CookieRead functions of WLanguage for the platforms where these functions are not available yet.
+      CCookie is Class
+      	aaCookie is ASSOCIATIVE ARRAY of strings
+      END
+     type : 131072
+  procedures :
+   -
+     name : Manufacturer
+     procedure_id : 1497720409696978765
+     type_code : 27
+     code : |1+
+      PROCEDURE Constructor()
+      
+     type : 589824
+   -
+     name : Destructor_
+     procedure_id : 1497720409697044301
+     type_code : 28
+     code : |1+
+      PROCEDURE Destructor()
+      
+     type : 655360
+   -
+     name : AnalyzeCookie
+     procedure_id : 1497720517071317612
+     type_code : 12
+     code : |1+
+      // Summary: Analyzes the headers of a response to an HTTP request to extract the cookies
+      // Syntax:
+      //AnalyzeCookie (<sHTTPHeader> is string)
+      //
+      // Parameters:
+      //	sHTTPHeader (UNICODE string): Headers to analyze (returned by HTTPGetResult(httpheader))
+      // Return value:
+      // 	None
+      //
+      PROCEDURE AnalyzeCookie( LOCAL sHTTPHeader is string )
+      
+      FOR EACH string sLine of sHTTPHeader SEPAREE by CR
+      	nPosTwoPoints is int = Position(sLine,":")
+      	IF nPosTwoPoints>0 THEN
+      		sHeaderName is string = sLine[[ TO nPosTwoPoints-1]]
+      		IF sHeaderName~="Set-Cookie" THEN
+      			sHeaderVal is string = ExtractString(sLine[[ nPosTwoPoints+1 TO ]],1,";")
+      			aaCookie[NoSpace(ExtractString(sHeaderVal,1,"="))] = NoSpace(ExtractString(sHeaderVal,2,"="))
+      		END		
+      	END	
+      END
+      
+     type : 458752
+   -
+     name : ReadCookie
+     procedure_id : 1497722063259576039
+     type_code : 12
+     code : |1+
+      // Summary: Reads the value of a cookie
+      // Syntax:
+      //[ <Result> = ] ReadCookie (<sName>)
+      //
+      // Parameters:
+      //	sName: Name of cookie
+      // Return value:
+      // 	UNICODE string: Value of the cookie
+      //
+      PROCEDURE ReadCookie( sName )
+      
+      RESULT aaCookie[sName]
+      
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : Classe1
+resources :
+ string_res :
+  identifier : 0x1006a26036c274b2
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

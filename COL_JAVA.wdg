@@ -1,0 +1,117 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : COL_JAVA
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x14f098a2001c7f25
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  type_code : 31
+  p_codes : []
+  procedures :
+   -
+     name : ProcessJavaPhoto
+     procedure_id : 1508873748262792675
+     type_code : 15
+     code : |1-
+      // Gives the image rotation
+      import android.media.ExifInterface;
+      import java.lang.Exception;
+      import android.graphics.*;
+      import android.util.Log;
+      import java.io.FileOutputStream;
+      
+      public static boolean ProcessJavaPhoto(String sPhoto, int nMaxSize){
+      	int nRotation = 0;
+      	boolean res = false;
+      	
+      	try{
+      		ExifInterface m_exif = new ExifInterface(sPhoto);
+      		nRotation = (int)exifOrientationToDegrees(m_exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL));
+      		
+      		// BITMAP
+      		BitmapFactory.Options bounds = new BitmapFactory.Options();
+      		// Reduces the size
+      		Bitmap sourceBitmap = BitmapFactory.decodeFile(sPhoto,bounds);
+      		
+      		if (sourceBitmap == null){
+      			return false;
+      		}
+      		
+      		// Rotation
+      		Matrix matrix = new Matrix();
+      		if (nRotation > 0) {
+      			matrix.preRotate(nRotation);
+      		}
+      		
+      		// resizing
+      		int width = sourceBitmap.getWidth();
+      		int height = sourceBitmap.getHeight();
+      		int newWidth;
+      		int newHeight;
+      		if (width > height){
+      			newWidth = nMaxSize;
+      			newHeight = (int) nMaxSize * height / width;
+      		}
+      		else{
+      			newHeight = nMaxSize;
+      			newWidth = (int) nMaxSize * width / height;
+      		}
+      		float scaleWidth = ((float) newWidth) / width;
+      		float scaleHeight = ((float) newHeight) / height;
+      		matrix.postScale(scaleWidth, scaleHeight);
+      		
+      		
+      		// Create the new bitmap
+      		Bitmap resizedBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, width, height, matrix, true);
+      		sourceBitmap.recycle();
+      		
+      		if (resizedBitmap == null){
+      			return false;
+      		}
+      		
+      		// Save
+      		FileOutputStream out = new FileOutputStream(sPhoto);
+      		res = resizedBitmap.compress(Bitmap.CompressFormat.JPEG , 100, out);
+      		resizedBitmap.recycle();
+      		
+      		resizedBitmap = null;
+      		sourceBitmap = null;
+      		
+      		return res;
+      	} 
+      	catch(Exception e) {
+      		Log.e("MB",e.toString());
+      		return false;
+      	}
+      	
+      }
+      
+      public static float exifOrientationToDegrees(int exifOrientation) {
+      	if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+      		return 90;
+      	} else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+      		return 180;
+      	} else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+      		return 270;
+      	}
+      	return 0;
+      }
+     language : Java
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : COL_SansNom1
+resources :
+ string_res :
+  identifier : 0x1006a26036ef74e1
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
